@@ -18,6 +18,8 @@ def get_news():
              or an error message if an exception occurs.
     :rtype: Tuple[flask.Response, int]
     """
+
+    # Will try to use NewsAPI here... TODO
     try:
         news_data = fetch_news()
         return jsonify(news_data), 200
