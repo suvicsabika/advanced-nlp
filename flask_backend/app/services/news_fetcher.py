@@ -11,7 +11,11 @@ def fetch_news(category=None, country='us', page_size=20):
     If a category is provided, it uses the 'top-headlines' endpoint.\n
     If no category is provided, it uses the 'everything' endpoint with a default keyword query.
 
-    **Important to mention it here, that the category should be determined based on the input of the User.
+    Please review the API call restriction on the following websites:
+     * https://newsapi.org/docs/endpoints/everything
+     * https://newsapi.org/docs/endpoints/top-headlines
+
+    **TODO: Important to mention it here, that the category should be determined based on the input of the User.
     An LLM should determine the article categorization of the User!**
 
     :param category: Optional; News category (e.g., 'technology', 'sports').
@@ -41,12 +45,13 @@ def fetch_news(category=None, country='us', page_size=20):
             "pageSize": page_size,
         }
     else:
-        # Use everything endpoint
+        # Use everything endpoint with default keyword if category is not provided
         base_url = "https://newsapi.org/v2/everything"
         today = datetime.now().date()
         seven_days_ago = today - timedelta(days=7)
         params = {
             "apiKey": API_KEY,
+            "q": "Global news around the world today",  #  One qKeyWord is required/mandatory, otherwise BAD_REQUEST
             "from": seven_days_ago.isoformat(),
             "to": today.isoformat(),
             "sortBy": "publishedAt",

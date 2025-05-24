@@ -8,3 +8,6 @@ http://localhost:5000/api/news?category=technology
 
 GET - 10 latest Health news from Germany:
 http://localhost:5000/api/news?category=health&country=de&page_size=10
+
+POST - Generate fake headlines
+http://localhost:5000/api/news_with_headlines

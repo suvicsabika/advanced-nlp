@@ -1,8 +1,12 @@
+import warnings
+from warnings import deprecated
+
 from flask import Blueprint, jsonify, request
 from app.services.news_fetcher import fetch_news
 
 news_bp = Blueprint('news', __name__)
 
+@deprecated("Please review the docstring of get_news()")
 @news_bp.route('/api/news', methods=['GET'])
 def get_news():
     """
@@ -33,6 +37,15 @@ def get_news():
       success, or an error message with an appropriate HTTP status code in case
       of failure.
     """
+    warnings.warn(
+        "get_news() is deprecated and will be removed in a future version "
+        "(likely within 4-5 commits). The reason is because you should not use a 'GET ALL ARTICLES' "
+        "type of request from the frontend. I just implemented this to test the news_fetcher.py "
+        "callings from API calls (it was easier this way).",
+        category=DeprecationWarning,
+        stacklevel=2
+    )
+
     category = request.args.get('category')  # optional
     country = request.args.get('country', 'us')  # default: 'us'
     page_size = request.args.get('page_size', 20)
@@ -50,6 +63,12 @@ def get_news():
             country=country,
             page_size=page_size
         )
+        if not news_data:
+            return jsonify({
+                "articles": [],
+                "message": f"No articles found for category={category} and country={country}."
+            }), 200
+
         return jsonify(news_data), 200
     except Exception as e:
         return jsonify({
