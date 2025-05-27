@@ -1,18 +1,30 @@
-# Advanced Natural Language Processing project
+# NLP Article Processing Pipeline
 
-##  PERSONALIZED AND STYLIZED HEADLINE GENERATION WITH LLM COLLABORATION
-### Project Description:
- * The goal of this project is to develop a natural language processing system capable of
-generating personalized, attention-grabbing headlines based on the content of news articles.
-Unlike traditional summarization tools, this system not only condenses the article into a short
-title but also adapts the output to the user’s interests and stylistic preferences (e.g., formal,
-casual, sensational, question-based).
- * The solution is powered by Large Language Models (LLMs) that are fine-tuned or adapted
-through techniques such as prompt engineering, LoRA, and reinforcement learning with
-human feedback (RLHF). The system learns to identify key information in a news article,
-match it with the user profile, and generate a headline that is both contextually accurate and
-stylistically appropriate.
- * The user interacts with the system by specifying their topic interests and preferred headline
-tone. The system then retrieves or receives a news article, processes it through tokenization
-and embedding, and uses a transformer-based LLM to generate a customized headline. The
-output is evaluated and refined based on user feedback.
+This project downloads articles from URLs, processes their textual content, and applies various Natural Language Processing (NLP) techniques such as summarization, title generation, named entity recognition (NER), zero-shot classification, and word cloud creation.
+
+## Key Features
+
+* **Web Scraping:** Downloads article content based on URLs.
+* **Text Cleaning and Preprocessing:** Removes HTML tags, scripts, styles, and common boilerplate text.
+* **Tokenization and Lemmatization:** Using spaCy.
+* **Abstractive Summarization:** With a Hugging Face Transformers model (sshleifer/distilbart-cnn-12-6).
+* **Title Generation:** With a Hugging Face Transformers model (t5-large).
+* **Named Entity Recognition (NER):** With a Hugging Face Transformers model (dslim/bert-base-NER) and post-processing.
+* **Zero-shot Text Classification:** With a Hugging Face Transformers model (MoritzLaurer/DeBERTa-v3-large-mnli-fever-anli-ling-wanli).
+* **Word Cloud Creation:** With customizable options (mask, colors, font, etc.).
+* **Results Saving:** All processed outputs (cleaned text, tokenized, lemmatized text, summary, title, named entities, word cloud image) are saved to a designated directory.
+
+## Installation and Setup
+
+### Prerequisites
+* Python 3.x
+* GPU usage is highly recommended for running the transformer models efficiently.
+
+### Installing Dependencies
+To install the necessary Python packages, run the following commands (or create and use a `requirements.txt` file based on these):
+```bash
+pip install requests beautifulsoup4 lxml spacy
+pip install transformers torch torchvision torchaudio
+pip install tensorflow # Although the main models are PyTorch-based, this is also installed
+pip install wordcloud matplotlib Pillow numpy
+pip install hf_xet # Installed, though its direct use in the main script is not explicit
